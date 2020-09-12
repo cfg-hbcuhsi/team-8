@@ -382,15 +382,15 @@ header .navbar {
 }
 
 .Modern-Slider .item-1 .img-fill {
-	background-image: url(../images/slide_01.jpg);
+	background-image: url(../images/HSS3.png);
 }
 
 .Modern-Slider .item-2 .img-fill {
-	background-image: url(../images/slide_02.jpg);
+	background-image: url(../images/HSS3.png);
 }
 
 .Modern-Slider .item-3 .img-fill {
-	background-image: url(../images/slide_03.jpg);
+	background-image: url(../images/HSS3.png);
 }
 
 .Modern-Slider .NextArrow{
@@ -575,7 +575,7 @@ ul.slick-dots {
 
 .fun-facts {
 	margin-top: 140px;
-	background-image: url(../images/fun-facts-bg.jpg);
+	background-image: url(../images/page-heading-bg.jpg);
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: cover;
