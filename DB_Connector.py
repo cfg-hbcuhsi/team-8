@@ -6,7 +6,7 @@ try:
     connection = mysql.connector.connect(host='localhost',
                                          database='collegeUsers',
                                          user='',
-                                         ='')
+                                         password='')
     mySql_insert_query = """INSERT INTO Users (UserName, pWord, PhoneNumber) 
                            VALUES 
                            ('', '', '') """

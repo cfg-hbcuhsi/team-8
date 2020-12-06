@@ -250,19 +250,19 @@
 
       // Public
       _proto.close = function close(element) {
-        var Element = this._element;
+        var rootElement = this._element;
 
         if (element) {
-          Element = this._getRootElement(element);
+          rootElement = this._getRootElement(element);
         }
 
-        var customEvent = this._triggerCloseEvent(Element);
+        var customEvent = this._triggerCloseEvent(rootElement);
 
         if (customEvent.isDefaultPrevented()) {
           return;
         }
 
-        this._removeElement(Element);
+        this._removeElement(rootElement);
       };
 
       _proto.dispose = function dispose() {
@@ -430,9 +430,9 @@
       _proto.toggle = function toggle() {
         var triggerChangeEvent = true;
         var addAriaPressed = true;
-        var Element = $$$1(this._element).closest(Selector.DATA_TOGGLE)[0];
+        var rootElement = $$$1(this._element).closest(Selector.DATA_TOGGLE)[0];
 
-        if (Element) {
+        if (rootElement) {
           var input = this._element.querySelector(Selector.INPUT);
 
           if (input) {
@@ -440,7 +440,7 @@
               if (input.checked && this._element.classList.contains(ClassName.ACTIVE)) {
                 triggerChangeEvent = false;
               } else {
-                var activeElement = Element.querySelector(Selector.ACTIVE);
+                var activeElement = rootElement.querySelector(Selector.ACTIVE);
 
                 if (activeElement) {
                   $$$1(activeElement).removeClass(ClassName.ACTIVE);
@@ -449,7 +449,7 @@
             }
 
             if (triggerChangeEvent) {
-              if (input.hasAttribute('disabled') || Element.hasAttribute('disabled') || input.classList.contains('disabled') || Element.classList.contains('disabled')) {
+              if (input.hasAttribute('disabled') || rootElement.hasAttribute('disabled') || input.classList.contains('disabled') || rootElement.classList.contains('disabled')) {
                 return;
               }
 
@@ -1628,11 +1628,11 @@
   }
 
   /**
-   * Finds the  node (document, shadowDOM ) of the given element
+   * Finds the root node (document, shadowDOM root) of the given element
    * @method
    * @memberof Popper.Utils
    * @argument {Element} node
-   * @returns {Element}  node
+   * @returns {Element} root node
    */
   function getRoot(node) {
     if (node.parentNode !== null) {
@@ -1678,9 +1678,9 @@
     }
 
     // one of the nodes is inside shadowDOM, find which one
-    var element1 = getRoot(element1);
-    if (element1.host) {
-      return findCommonOffsetParent(element1.host, element2);
+    var element1root = getRoot(element1);
+    if (element1root.host) {
+      return findCommonOffsetParent(element1root.host, element2);
     } else {
       return findCommonOffsetParent(element1, getRoot(element2).host);
     }

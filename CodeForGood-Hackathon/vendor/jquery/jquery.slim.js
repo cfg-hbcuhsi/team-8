@@ -1995,7 +1995,7 @@ Expr = Sizzle.selectors = {
 			return hash && hash.slice( 1 ) === elem.id;
 		},
 
-		"": function( elem ) {
+		"root": function( elem ) {
 			return elem === docElem;
 		},
 
@@ -2116,7 +2116,7 @@ Expr = Sizzle.selectors = {
 Expr.pseudos["nth"] = Expr.pseudos["eq"];
 
 // Add button/input type pseudos
-for ( i in { radio: true, checkbox: true, file: true, : true, image: true } ) {
+for ( i in { radio: true, checkbox: true, file: true, password: true, image: true } ) {
 	Expr.pseudos[ i ] = createInputPseudo( i );
 }
 for ( i in { submit: true, reset: true } ) {
@@ -2899,8 +2899,8 @@ jQuery.fn.extend( {
 // Initialize a jQuery object
 
 
-// A central reference to the  jQuery(document)
-var jQuery,
+// A central reference to the root jQuery(document)
+var rootjQuery,
 
 	// A simple way to check for HTML strings
 	// Prioritize #id over <tag> to avoid XSS via location.hash (#9521)
@@ -2908,7 +2908,7 @@ var jQuery,
 	// Shortcut simple #id case for speed
 	rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]+))$/,
 
-	init = jQuery.fn.init = function( selector, context,  ) {
+	init = jQuery.fn.init = function( selector, context, root ) {
 		var match, elem;
 
 		// HANDLE: $(""), $(null), $(undefined), $(false)
@@ -2916,9 +2916,9 @@ var jQuery,
 			return this;
 		}
 
-		// Method init() accepts an alternate jQuery
+		// Method init() accepts an alternate rootjQuery
 		// so migrate can support jQuery.sub (gh-2101)
-		 =  || jQuery;
+		root = root || rootjQuery;
 
 		// Handle HTML strings
 		if ( typeof selector === "string" ) {
@@ -2980,7 +2980,7 @@ var jQuery,
 
 			// HANDLE: $(expr, $(...))
 			} else if ( !context || context.jquery ) {
-				return ( context ||  ).find( selector );
+				return ( context || root ).find( selector );
 
 			// HANDLE: $(expr, context)
 			// (which is just equivalent to: $(context).find(expr)
@@ -2997,8 +2997,8 @@ var jQuery,
 		// HANDLE: $(function)
 		// Shortcut for document ready
 		} else if ( isFunction( selector ) ) {
-			return .ready !== undefined ?
-				.ready( selector ) :
+			return root.ready !== undefined ?
+				root.ready( selector ) :
 
 				// Execute immediately if ready is not present
 				selector( jQuery );
@@ -3011,7 +3011,7 @@ var jQuery,
 init.prototype = jQuery.fn;
 
 // Initialize central reference
-jQuery = jQuery( document );
+rootjQuery = jQuery( document );
 
 
 var rparentsprev = /^(?:parents|prev(?:Until|All))/,
@@ -7955,7 +7955,7 @@ jQuery.fn.extend( {
 		} else {
 			offset = this.offset();
 
-			// Account for the *real* offset parent, which can be the document or its  element
+			// Account for the *real* offset parent, which can be the document or its root element
 			// when a statically positioned element is identified
 			doc = elem.ownerDocument;
 			offsetParent = elem.offsetParent || doc.documentElement;
